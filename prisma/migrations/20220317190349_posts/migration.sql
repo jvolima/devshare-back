@@ -1,0 +1,9 @@
+-- CreateTable
+CREATE TABLE "posts" (
+    "id" TEXT NOT NULL PRIMARY KEY,
+    "id_user" TEXT NOT NULL,
+    "content" TEXT NOT NULL,
+    "created_at" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updated_at" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT "posts_id_user_fkey" FOREIGN KEY ("id_user") REFERENCES "users" ("id") ON DELETE RESTRICT ON UPDATE CASCADE
+);
