@@ -15,7 +15,7 @@ class ListPostsUseCase {
       return b.created_at.getTime() - a.created_at.getTime();
     })
 
-    return posts;
+    return recentToLatestPosts;
   }
 }
 

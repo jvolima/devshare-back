@@ -23,6 +23,16 @@ class UsersRepository implements IUsersRepository {
 
     return user as User;
   }
+
+  async findById(id_user: string): Promise<User> {
+    const user = await prismaClient.user.findFirst({
+      where: {
+        id: id_user
+      }
+    });
+
+    return user as User;
+  }
 }
 
 export { UsersRepository }
