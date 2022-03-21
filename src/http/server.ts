@@ -1,4 +1,4 @@
 import "reflect-metadata";
-import { app } from "./app";
+import { serverHttp } from "./app";
 
-app.listen(3333, () => console.log("Server is running!"));
+serverHttp.listen(3333, () => console.log("Server is running!"));

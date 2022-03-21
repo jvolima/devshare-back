@@ -1,4 +1,4 @@
-import { Post } from "@prisma/client";
+import { Post, prisma } from "@prisma/client";
 import prismaClient from "../../../../prisma";
 import { ICreatePostDTO } from "../../dtos/ICreatePostDTO";
 import { IPostsRepository } from "../IPostsRepository";
@@ -14,7 +14,11 @@ class PostsRepository implements IPostsRepository {
   };
 
   async list(): Promise<Post[]> {
-    const posts = await prismaClient.post.findMany();
+    const posts = await prismaClient.post.findMany({
+      include: {
+        user: true
+      }
+    });
 
     return posts;
   }

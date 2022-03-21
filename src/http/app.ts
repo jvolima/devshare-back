@@ -1,17 +1,29 @@
 import "reflect-metadata";
 import "express-async-errors"
 import "../shared/container"
+import http from "http";
 import express, { Request, Response, NextFunction } from "express";
 import cors from "cors";
 import { routes } from "./routes";
 import { AppError } from "../errors/AppError";
+import { Server } from "socket.io";
 
 const app = express();
-
 app.use(cors());
 
-app.use(express.json());
+const serverHttp = http.createServer(app);
 
+const io = new Server(serverHttp, {
+  cors: {
+    origin: "*"
+  }
+});
+
+io.on("connection", socket => {
+  console.log(`Usuario conectado no socket ${socket.id}`)
+})
+
+app.use(express.json());
 app.use(routes);
 
 app.use(
@@ -29,4 +41,4 @@ app.use(
   }
 )
 
-export { app };
+export { serverHttp, io };
