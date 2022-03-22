@@ -13,11 +13,14 @@ datasource db {
 model User {
   id        String @id @default(uuid())
   name      String 
+  bio       String?
   email     String 
   password  String
 
   tokens UserToken[]
   posts Post[]
+  comments Comment[]
+  likes PostLike[]
 
   @@map("users")
 }
@@ -42,6 +45,34 @@ model Post {
   updated_at DateTime @default(now())
 
   user User @relation(fields: [id_user], references: [id])
+  comments Comment[]
+  likes PostLike[]
 
   @@map("posts")
+}
+
+model Comment {
+  id            String @id @default(uuid())
+  id_user       String
+  id_post       String
+  content       String
+  created_at    DateTime @default(now())
+  updated_at    DateTime @default(now())
+
+  user User @relation(fields: [id_user], references: [id])
+  post Post @relation(fields: [id_post], references: [id])
+
+  @@map("comments")
+}
+
+model PostLike {
+  id            String @id @default(uuid())
+  id_user       String
+  id_post       String
+  created_at    DateTime @default(now())
+
+  user User @relation(fields: [id_user], references: [id])
+  post Post @relation(fields: [id_post], references: [id])
+
+  @@map("post_likes")
 }
