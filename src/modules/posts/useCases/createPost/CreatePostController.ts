@@ -9,12 +9,12 @@ class CreatePostController {
 
     const createPostUseCase = container.resolve(CreatePostUseCase);
 
-    await createPostUseCase.execute({
+    const post = await createPostUseCase.execute({
       id_user,
       content
     });
 
-    return response.status(201).send();
+    return response.status(201).json(post);
   }
 }
 

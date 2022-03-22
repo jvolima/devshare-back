@@ -16,10 +16,14 @@ class CreatePostUseCase {
       throw new AppError("At least 1 caracter");   
     };
 
-    await this.postsRepository.create({
+    const post = await this.postsRepository.create({
       id_user,
       content
     });
+
+    io.emit("new_post", post);
+
+    return post;
   }
 }
 
