@@ -33,6 +33,17 @@ class UsersRepository implements IUsersRepository {
 
     return user as User;
   }
+
+  async updateBio(id_user: string, bio: string): Promise<void> {
+    await prismaClient.user.update({
+      where: {
+        id: id_user
+      },
+      data: {
+        bio
+      }
+    });
+  }
 }
 
 export { UsersRepository }
