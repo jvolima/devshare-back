@@ -3,6 +3,12 @@ import prismaClient from "../../../../prisma";
 import { ICreateUserDTO } from "../../dtos/ICreateUserDTO";
 import { IUsersRepository } from "../IUsersRepository";
 
+interface UpdateUser {
+  id_user: string;
+  name?: string;
+  bio?: string;
+}
+
 class UsersRepository implements IUsersRepository {
   async create({ name, email, password }: ICreateUserDTO): Promise<void> {
     await prismaClient.user.create({
@@ -34,15 +40,16 @@ class UsersRepository implements IUsersRepository {
     return user as User;
   }
 
-  async updateBio(id_user: string, bio: string): Promise<void> {
-    await prismaClient.user.update({
+  async updateUser({ id_user, bio, name }: UpdateUser): Promise<void> {
+    await prismaClient.user. update({
       where: {
         id: id_user
       },
       data: {
-        bio
+        bio, 
+        name
       }
-    });
+    })
   }
 }
 
